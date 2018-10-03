@@ -1,0 +1,4 @@
+## Gitignore file for gas-transport-visualisation repository
+
+# JetBrains
+.idea
