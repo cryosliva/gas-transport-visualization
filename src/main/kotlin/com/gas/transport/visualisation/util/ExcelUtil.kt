@@ -20,11 +20,6 @@ object ExcelConstants {
     val nodeInfoHeaders = listOf(nodeName, nodeLatitude, nodeLongitude, nodeType, nodeRegion)
 }
 
-fun Sheet?.notNull(): Sheet {
-    Assert.isTrue(this != null, ErrorCode.INCORRECT_VALUE, "Некорректный формат загруженной страницы")
-    return this!!
-}
-
 fun Sheet.getColumnToIndexMap(): MutableMap<String, Int> {
     val headerToIndexMap = mutableMapOf<String, Int>()
 
@@ -58,6 +53,11 @@ fun String.getNodeType(): NodeType = when (this.trim()) {
 
 fun Cell.safeStringValue() = when (this.cellTypeEnum) {
     CellType.ERROR -> ""
-    else -> this.stringCellValue
+    else -> this.stringCellValue.trim()
+}
+
+inline fun <reified T> T?.notNull() : T{
+    Assert.isTrue(this != null, ErrorCode.INCORRECT_VALUE, "Некорректный формат загруженной страницы : $this")
+    return this!!
 }
 
