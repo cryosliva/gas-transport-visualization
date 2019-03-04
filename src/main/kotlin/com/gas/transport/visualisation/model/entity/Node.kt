@@ -20,19 +20,13 @@ class Node : AbstractEntity() {
     @Column(name = "type")
     var type: NodeType? = null
 
-    @Column(name = "demand")
-    var demand: Double? = null
-
-    @Column(name = "supply")
-    var supply: Double? = null
-
     @OneToMany(cascade = [CascadeType.ALL],
             fetch = FetchType.LAZY,
             mappedBy = "destination")
-    var demandsSources = mutableSetOf<Node>()
+    var demandsSources = mutableSetOf<Pipe>()
 
     @OneToMany(cascade = [CascadeType.ALL],
             fetch = FetchType.LAZY,
             mappedBy = "source")
-    var supplySources = mutableSetOf<Node>()
+    var supplySources = mutableSetOf<Pipe>()
 }

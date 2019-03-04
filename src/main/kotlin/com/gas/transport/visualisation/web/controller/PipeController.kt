@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
-@RestController("/pipe")
+@RestController
 class PipeController {
 
     @Autowired
     lateinit var pipeService: PipeService
 
-    @GetMapping("/all")
+    @GetMapping("/pipe/all")
     fun getAllPipes() = pipeService.getAllPipes()
 }

@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "gtv_pipe")
-class Pipe {
+class Pipe : AbstractEntity() {
     @Column(name = "capacity")
     var capacity: Double? = null
 
