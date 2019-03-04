@@ -9,12 +9,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.web.AuthenticationEntryPoint
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Autowired
     private lateinit var usernamePasswordAuthenticationProvider: UsernamePasswordAuthenticationProvider
+
+    @Autowired
+    private lateinit var authEntryPoint: AuthenticationEntryPoint
+
 
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.authenticationProvider(usernamePasswordAuthenticationProvider)
@@ -24,10 +29,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
         http.authorizeRequests()
                 .antMatchers("/register*").anonymous()
                 .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .and()
-                .csrf().disable()
+                .and().httpBasic()
+                .authenticationEntryPoint(authEntryPoint)
+                .and().csrf().disable()
     }
 
     @Bean
