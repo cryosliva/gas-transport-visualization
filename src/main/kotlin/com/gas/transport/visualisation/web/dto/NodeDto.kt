@@ -9,5 +9,3 @@ class NodeDto(val latitude: Double,
               val type: String)
 
 fun Node.toNodeDto(): NodeDto = NodeDto(latitude!!, longitude!!, name!!, region!!, type!!.name)
-
-fun Node.getPositionDto(): PositionDto = PositionDto(latitude!!, longitude!!)

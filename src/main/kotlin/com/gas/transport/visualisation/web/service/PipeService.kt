@@ -11,6 +11,6 @@ class PipeService {
     @Autowired
     lateinit var pipeDao: PipeDao
 
-    fun getAllPipes() = pipeDao.findAll().map { pipe->pipe.toPipeDto() }
+    fun getAllPipes() = pipeDao.findAll().map { pipe->pipe.toPipeDto() }.toList()
 
 }
