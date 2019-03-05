@@ -14,7 +14,7 @@ class DataController {
     private lateinit var uploadService: ExcelWorkbookUploadService
 
     @PostMapping("data/upload", consumes = ["multipart/form-data"])
-    fun uploadExcel(@RequestParam("file") file: MultipartFile){
-        uploadService.loadExcelBook(file)
+    fun uploadExcel(@RequestParam("snapshotId") snapshotId: String, @RequestParam("year") year: Int, @RequestParam("file") file: MultipartFile) {
+        uploadService.loadExcelBook(snapshotId, year, file)
     }
 }

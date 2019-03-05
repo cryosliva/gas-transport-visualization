@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "gtv_node")
-class Node : AbstractEntity() {
+class Node : AbstractMapEntity() {
     @Column(name = "latitude")
     var latitude: Double? = null
 
