@@ -19,9 +19,8 @@ class ExcelWorkbookUploadService {
     @Autowired
     lateinit var pipeDao: PipeDao
 
-    fun loadExcelBook(file: MultipartFile) {
+    fun loadExcelBook(snapshotId: String, year: Int, file: MultipartFile) {
         //todo validate
-
         val workbook = WorkbookFactory.create(file.inputStream)
 
         // parsing nodes sheet
@@ -34,6 +33,8 @@ class ExcelWorkbookUploadService {
 
         nodeSheet.forEach { row ->
             val node = Node().apply {
+                this.snapshotId = snapshotId
+
                 this.name = row.getCell(headerToIndexMap[ExcelConstants.nodeName]!!).safeStringValue()
                 this.latitude = row.getCell(headerToIndexMap[ExcelConstants.nodeLatitude]!!).safeStringValue().getPosition()
                 this.longitude = row.getCell(headerToIndexMap[ExcelConstants.nodeLongitude]!!).safeStringValue().getPosition()
@@ -48,7 +49,7 @@ class ExcelWorkbookUploadService {
 
         val pipeSheet = workbook.getSheet(ExcelConstants.pipeInfoSheet)
         pipeSheet.getRow(0).forEachIndexed { index, cell ->
-            if(index != 0) {
+            if (index != 0) {
 
                 val name = cell.safeStringValue()
                 val node = nameToNodeMap[name].notNull()
@@ -71,6 +72,8 @@ class ExcelWorkbookUploadService {
                     if (value.toInt() != 0) {
                         val destinationNode = indexToNodeMap[cellIndex].notNull()
                         val pipe = Pipe().apply {
+                            this.snapshotId = snapshotId
+
                             this.capacity = value
                             this.source = sourceNode
                             this.destination = destinationNode
@@ -81,8 +84,8 @@ class ExcelWorkbookUploadService {
             }
         }
 
-        nodeDao.deleteAll()
-        pipeDao.deleteAll()
+        nodeDao.deleteAllBySnapshotIdAndYear(snapshotId, year)
+        pipeDao.deleteAllBySnapshotIdAndYear(snapshotId, year)
 
         nodeDao.saveAll(nameToNodeMap.values)
         pipeDao.saveAll(pipes)
