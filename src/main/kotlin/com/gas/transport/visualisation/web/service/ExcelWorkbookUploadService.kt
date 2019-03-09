@@ -86,6 +86,12 @@ class ExcelWorkbookUploadService {
             }
         }
 
+        //demands - supply calc
+        pipes.forEach { pipe ->
+            pipe.destination!!.supply += pipe.capacity
+            pipe.source!!.demand += pipe.capacity
+        }
+
         nodeDao.deleteAllBySnapshotIdAndYear(snapshotId, year)
         pipeDao.deleteAllBySnapshotIdAndYear(snapshotId, year)
 

@@ -20,6 +20,12 @@ class Node : AbstractMapEntity() {
     @Column(name = "type")
     var type: NodeType? = null
 
+    @Column(name = "supply")
+    var supply: Double = 0.0
+
+    @Column(name = "demand")
+    var demand: Double = 0.0
+
     @OneToMany(cascade = [CascadeType.ALL],
             fetch = FetchType.LAZY,
             mappedBy = "destination")

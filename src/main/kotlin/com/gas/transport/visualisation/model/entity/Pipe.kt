@@ -6,7 +6,7 @@ import javax.persistence.*
 @Table(name = "gtv_pipe")
 class Pipe : AbstractMapEntity() {
     @Column(name = "capacity")
-    var capacity: Double? = null
+    var capacity: Double = 0.0
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "destination_id", nullable = false)
