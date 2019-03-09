@@ -34,6 +34,7 @@ class ExcelWorkbookUploadService {
         nodeSheet.forEach { row ->
             val node = Node().apply {
                 this.snapshotId = snapshotId
+                this.year = year
 
                 this.name = row.getCell(headerToIndexMap[ExcelConstants.nodeName]!!).safeStringValue()
                 this.latitude = row.getCell(headerToIndexMap[ExcelConstants.nodeLatitude]!!).safeStringValue().getPosition()
@@ -73,6 +74,7 @@ class ExcelWorkbookUploadService {
                         val destinationNode = indexToNodeMap[cellIndex].notNull()
                         val pipe = Pipe().apply {
                             this.snapshotId = snapshotId
+                            this.year = year
 
                             this.capacity = value
                             this.source = sourceNode

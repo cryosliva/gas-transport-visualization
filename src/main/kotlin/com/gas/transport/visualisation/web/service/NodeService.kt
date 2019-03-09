@@ -20,12 +20,12 @@ class NodeService {
     fun getAllNodes() = nodeDao.findAll().map { node -> node.toNodeDto() }
 
     fun getFilteredNodes(filter: NodeFilterDto): List<NodeDto> {
-        val specification = hasNodeYear(filter.year).and(hasNodeSnapshot(filter.snapshotId))
+        var specification = hasNodeYear(filter.year).and(hasNodeSnapshot(filter.snapshotId))
         if (filter.region != null)
-            specification.and(hasRegion(filter.region))
+            specification = specification.and(hasRegion(filter.region))
 
         if (filter.type != null)
-            specification.and(hasNodeType(filter.type))
+            specification = specification.and(hasNodeType(filter.type))
 
         return nodeCustomDao.findAll(specification).map { node -> node.toNodeDto() }
     }

@@ -9,5 +9,5 @@ interface PipeCustomDao: JpaRepository<Pipe, Long>, JpaSpecificationExecutor<Pip
 
 fun hasPipeYear(year: Int) = Specification<Pipe> { root, _, criteriaBuilder -> criteriaBuilder.equal(root.get<Int>("year"), year) }
 
-fun hasPipeSnapshot(snapshotId: String) = Specification<Pipe> { root, _, criteriaBuilder -> criteriaBuilder.equal(root.get<String>("snapshot_id"), snapshotId) }
+fun hasPipeSnapshot(snapshotId: String) = Specification<Pipe> { root, _, criteriaBuilder -> criteriaBuilder.equal(root.get<String>("snapshotId"), snapshotId) }
 

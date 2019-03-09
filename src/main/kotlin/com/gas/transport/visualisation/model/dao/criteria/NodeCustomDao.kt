@@ -11,7 +11,7 @@ interface NodeCustomDao : JpaRepository<Node, Long>, JpaSpecificationExecutor<No
 
 fun hasNodeYear(year: Int) = Specification<Node> { root, _, criteriaBuilder -> criteriaBuilder.equal(root.get<Int>("year"), year) }
 
-fun hasNodeSnapshot(snapshotId: String) = Specification<Node> { root, _, criteriaBuilder -> criteriaBuilder.equal(root.get<String>("snapshot_id"), snapshotId) }
+fun hasNodeSnapshot(snapshotId: String) = Specification<Node> { root, _, criteriaBuilder -> criteriaBuilder.equal(root.get<String>("snapshotId"), snapshotId) }
 
 fun hasRegion(region: String) = Specification<Node> { root, _, criteriaBuilder -> criteriaBuilder.equal(root.get<String>("region"), region) }
 
