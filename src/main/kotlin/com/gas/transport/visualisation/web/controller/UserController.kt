@@ -1,21 +1,22 @@
 package com.gas.transport.visualisation.web.controller
 
-import com.gas.transport.visualisation.web.dto.UserDto
 import com.gas.transport.visualisation.web.dto.UserRegistrationDto
-import com.gas.transport.visualisation.web.service.UserRegistrationService
+import com.gas.transport.visualisation.web.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class UserRegistrationController {
+class UserController {
 
     @Autowired
-    private lateinit var userRegistrationService: UserRegistrationService
+    private lateinit var userService: UserService
 
     @PostMapping("/register")
-    fun register(@RequestBody dto: UserRegistrationDto): UserDto {
-        return userRegistrationService.register(dto)
-    }
+    fun register(@RequestBody dto: UserRegistrationDto) = userService.register(dto)
+
+    @GetMapping("/user/info")
+    fun getInfo() = userService.getUserInfo()
 }
