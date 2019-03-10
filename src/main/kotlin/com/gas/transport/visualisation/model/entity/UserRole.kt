@@ -6,7 +6,6 @@ enum class UserRole {
 
 
     companion object {
-
         val ROLE_USER = "ROLE_USER"
         val ROLE_ADMIN = "ROLE_ADMIN"
     }

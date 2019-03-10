@@ -13,4 +13,12 @@ object SecurityUtils {
         }
         throw GtvAccessDeniedException("Вы не авторизованы")
     }
+
+    fun getCurrentUserDetails() : AccountUserDetails{
+        val principal = SecurityContextHolder.getContext().authentication.principal
+        if (principal is AccountUserDetails) {
+            return principal
+        }
+        throw GtvAccessDeniedException("Вы не авторизованы")
+    }
 }

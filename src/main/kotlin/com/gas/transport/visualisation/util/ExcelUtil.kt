@@ -56,8 +56,8 @@ fun Cell.safeStringValue() = when (this.cellTypeEnum) {
     else -> this.stringCellValue.trim()
 }
 
-inline fun <reified T> T?.notNull() : T{
-    Assert.isTrue(this != null, ErrorCode.INCORRECT_VALUE, "Некорректный формат загруженной страницы : $this")
+inline fun <reified T> T?.notNull(message: String = "Некорректный формат загруженной страницы") : T{
+    Assert.isTrue(this != null, ErrorCode.INCORRECT_VALUE, message)
     return this!!
 }
 
