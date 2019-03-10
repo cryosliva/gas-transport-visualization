@@ -26,9 +26,9 @@ class JpaConfig {
     @Profile("prod")
     fun prodDataSource(): DataSource =
             DataSourceBuilder.create()
-                    .username("gdgazkfsqkipcp")
-                    .password("3a68ead98f1799698530e0d2ecc51c0dab03a7db9ea0e8e3cb301fca2d42b004")
+                    .username("uvstxzqprhqcyl")
+                    .password("a95e971bac8f9dc0473ba04663fefd89d334befd06a6c3e7c4ec23c14612e329")
                     .driverClassName("org.postgresql.Driver")
-                    .url("jdbc:postgresql://ec2-54-247-70-127.eu-west-1.compute.amazonaws.com:5432/dmbqk4e9og41g")
+                    .url("jdbc:postgresql://ec2-54-247-85-251.eu-west-1.compute.amazonaws.com:5432/d6uptcffdhnorv")
                     .build()
 }
