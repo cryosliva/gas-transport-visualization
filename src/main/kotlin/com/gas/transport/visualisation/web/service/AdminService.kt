@@ -49,7 +49,13 @@ class AdminService {
     @Transactional
     fun makeAdmin(username: String) {
         val user = userDao.findByUsername(username).notNull("Пользователя не существует")
-        if(!user.roles.contains(UserRole.ADMIN))
+        if (!user.roles.contains(UserRole.ADMIN))
             user.roles.add(UserRole.ADMIN)
     }
+
+    @Transactional(readOnly = true)
+    fun getUserList() = userDao.findAll().map { user -> user.toUserDto() }
+
+    @Transactional
+    fun removeUser(username: String) = userDao.deleteAllByUsername(username)
 }

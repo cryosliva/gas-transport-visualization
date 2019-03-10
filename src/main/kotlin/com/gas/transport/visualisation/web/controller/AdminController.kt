@@ -4,9 +4,7 @@ import com.gas.transport.visualisation.web.dto.UserRegistrationDto
 import com.gas.transport.visualisation.web.dto.UserSetRolesDto
 import com.gas.transport.visualisation.web.service.AdminService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class AdminController {
@@ -22,4 +20,10 @@ class AdminController {
 
     @PutMapping("/admin/user/make-admin")
     fun makeAdmin(username:String) = adminService.makeAdmin(username)
+
+    @GetMapping("/admin/user/list")
+    fun userList() = adminService.getUserList()
+
+    @PutMapping("/admin/user/delete")
+    fun deleteUser(@RequestParam("name") name:String) = adminService.removeUser(name)
 }
