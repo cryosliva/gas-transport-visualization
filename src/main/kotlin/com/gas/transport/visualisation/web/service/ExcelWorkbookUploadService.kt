@@ -87,9 +87,24 @@ class ExcelWorkbookUploadService {
         }
 
         //demands - supply calc
-        pipes.forEach { pipe ->
-            pipe.destination!!.supply += pipe.capacity
-            pipe.source!!.demand += pipe.capacity
+        val demands = workbook.getSheet(ExcelConstants.demandsInfoSheet)
+        demands.forEachIndexed { index, row ->
+            if (index != 0) {
+                val name = row.getCell(0).safeStringValue()
+                val node = nameToNodeMap[name].notNull("В таблице demands неизвестное значение")
+                val value = row.getCell(1).numericCellValue
+                val supply: Double
+                val demand: Double
+                if (value > 0) {
+                    supply = 0.0
+                    demand = value
+                } else {
+                    supply = -value
+                    demand = 0.0
+                }
+                node.supply = supply
+                node.demand = demand
+            }
         }
 
         nodeDao.deleteAllBySnapshotIdAndYear(snapshotId, year)

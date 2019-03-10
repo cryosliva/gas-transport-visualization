@@ -19,7 +19,7 @@ class NodeService {
     @Autowired
     lateinit var nodeCustomDao: NodeCustomDao
 
-    fun getAllUnpreparedNodes() = nodeDao.findAll()
+    fun getAllUnpreparedNodes(): MutableIterable<Node> = nodeDao.findAll()
 
     fun getAllNodes() = getAllUnpreparedNodes().map { node -> node.toNodeDto() }
 
