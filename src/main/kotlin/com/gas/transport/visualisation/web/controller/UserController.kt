@@ -1,5 +1,6 @@
 package com.gas.transport.visualisation.web.controller
 
+import com.gas.transport.visualisation.web.dto.UserChangeInfoDto
 import com.gas.transport.visualisation.web.dto.UserRegistrationDto
 import com.gas.transport.visualisation.web.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,9 +15,9 @@ class UserController {
     @Autowired
     private lateinit var userService: UserService
 
-    @PostMapping("/register")
-    fun register(@RequestBody dto: UserRegistrationDto) = userService.register(dto)
-
     @GetMapping("/user/info")
     fun getInfo() = userService.getUserInfo()
+
+    @PostMapping("/user/info")
+    fun changeInfo(@RequestBody dto: UserChangeInfoDto) = userService.changeUserInfo(dto)
 }
