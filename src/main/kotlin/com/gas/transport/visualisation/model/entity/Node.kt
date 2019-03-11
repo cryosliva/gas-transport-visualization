@@ -27,12 +27,12 @@ class Node : AbstractMapEntity() {
     var demand: Double = 0.0
 
     @OneToMany(cascade = [CascadeType.ALL],
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             mappedBy = "destination")
     var demandsSources = mutableSetOf<Pipe>()
 
     @OneToMany(cascade = [CascadeType.ALL],
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             mappedBy = "source")
     var supplySources = mutableSetOf<Pipe>()
 }
