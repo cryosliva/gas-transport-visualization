@@ -2,6 +2,7 @@ package com.gas.transport.visualisation.web.service
 
 import com.gas.transport.visualisation.model.dao.NodeDao
 import com.gas.transport.visualisation.model.dao.criteria.*
+import com.gas.transport.visualisation.model.entity.Node
 import com.gas.transport.visualisation.web.dto.NodeDto
 import com.gas.transport.visualisation.web.dto.filter.NodeFilterDto
 import com.gas.transport.visualisation.web.dto.toNodeDto
@@ -19,14 +20,16 @@ class NodeService {
 
     fun getAllNodes() = nodeDao.findAll().map { node -> node.toNodeDto() }
 
-    fun getFilteredNodes(filter: NodeFilterDto): List<NodeDto> {
+    fun getUnpreparedFilteredNodes(filter: NodeFilterDto) : List<Node>{
         var specification = hasNodeYear(filter.year).and(hasNodeSnapshot(filter.snapshotId))
         if (filter.region != null)
             specification = specification.and(hasRegion(filter.region))
 
         if (filter.type != null)
-            specification = specification.and(hasNodeType(filter.type))
-
-        return nodeCustomDao.findAll(specification).map { node -> node.toNodeDto() }
+            filter.type.forEach { type->
+                specification = specification.and(hasNodeType(type))
+            }
+        return nodeCustomDao.findAll(specification)
     }
+    fun getFilteredNodes(filter: NodeFilterDto): List<NodeDto> =  getUnpreparedFilteredNodes(filter).map { node -> node.toNodeDto() }
 }
