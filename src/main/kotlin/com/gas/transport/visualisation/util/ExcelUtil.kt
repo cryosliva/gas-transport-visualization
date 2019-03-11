@@ -10,6 +10,7 @@ object ExcelConstants {
     // sheets
     const val nodeInfoSheet = "nodes_locations"
     const val pipeInfoSheet = "flows"
+    const val demandsInfoSheet = "demands"
 
     // columns
     val nodeName = "Node"
@@ -56,8 +57,8 @@ fun Cell.safeStringValue() = when (this.cellTypeEnum) {
     else -> this.stringCellValue.trim()
 }
 
-inline fun <reified T> T?.notNull() : T{
-    Assert.isTrue(this != null, ErrorCode.INCORRECT_VALUE, "Некорректный формат загруженной страницы : $this")
+inline fun <reified T> T?.notNull(message: String = "Некорректный формат загруженной страницы") : T{
+    Assert.isTrue(this != null, ErrorCode.INCORRECT_VALUE, message)
     return this!!
 }
 
