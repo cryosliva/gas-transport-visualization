@@ -30,7 +30,7 @@ class NodeService {
 
         if (filter.type != null)
             filter.type.forEach { type ->
-                specification = specification.and(hasNodeType(type))
+                specification = specification.or(hasNodeType(type))
             }
         return nodeCustomDao.findAll(specification)
     }
