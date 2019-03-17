@@ -10,6 +10,7 @@ object ExcelConstants {
     // sheets
     const val nodeInfoSheet = "nodes_locations"
     const val pipeInfoSheet = "flows"
+    const val demandsInfoSheet = "demands"
 
     // columns
     val nodeName = "Node"

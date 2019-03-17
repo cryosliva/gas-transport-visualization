@@ -20,4 +20,7 @@ class NodeController {
 
     @PostMapping("/node/filter")
     fun getFilteredNodes(@RequestBody filter: NodeFilterDto) = nodeService.getFilteredNodes(filter)
+
+    @GetMapping("/node/filter")
+    fun getFilters() = nodeService.availableFilters()
 }
