@@ -8,6 +8,7 @@ import com.gas.transport.visualisation.web.dto.NodeDto
 import com.gas.transport.visualisation.web.dto.filter.NodeFilterDto
 import com.gas.transport.visualisation.web.dto.toNodeDto
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 
 @Service
@@ -25,15 +26,27 @@ class NodeService {
 
     fun getUnpreparedFilteredNodes(filter: NodeFilterDto): List<Node> {
         var specification = hasNodeYear(filter.year).and(hasNodeSnapshot(filter.snapshotId))
-        if (filter.region != null)
+        if (filter.region != null) {
+            var regionSpecification: Specification<Node>? = null
             filter.region.forEach { region ->
-                specification = specification.or(hasRegion(region))
+                regionSpecification = if (regionSpecification == null)
+                    hasRegion(region)
+                else
+                    regionSpecification!!.or(hasRegion(region))
             }
+            specification = specification.and(regionSpecification!!)
+        }
 
-        if (filter.type != null)
+        if (filter.type != null) {
+            var typeSpecification: Specification<Node>? = null
             filter.type.forEach { type ->
-                specification = specification.or(hasNodeType(type))
+                typeSpecification = if (typeSpecification == null)
+                    hasNodeType(type)
+                else
+                    typeSpecification!!.or(hasNodeType(type))
             }
+            specification = specification.and(typeSpecification!!)
+        }
         return nodeCustomDao.findAll(specification)
     }
 
