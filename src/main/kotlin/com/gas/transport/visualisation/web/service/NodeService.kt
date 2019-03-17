@@ -26,7 +26,9 @@ class NodeService {
     fun getUnpreparedFilteredNodes(filter: NodeFilterDto): List<Node> {
         var specification = hasNodeYear(filter.year).and(hasNodeSnapshot(filter.snapshotId))
         if (filter.region != null)
-            specification = specification.and(hasRegion(filter.region))
+            filter.region.forEach { region ->
+                specification = specification.or(hasRegion(region))
+            }
 
         if (filter.type != null)
             filter.type.forEach { type ->
