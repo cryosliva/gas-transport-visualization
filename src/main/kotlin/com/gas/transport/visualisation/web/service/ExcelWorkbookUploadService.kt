@@ -5,6 +5,7 @@ import com.gas.transport.visualisation.model.dao.PipeDao
 import com.gas.transport.visualisation.model.entity.Node
 import com.gas.transport.visualisation.model.entity.Pipe
 import com.gas.transport.visualisation.util.*
+import com.gas.transport.visualisation.web.dto.ExcelRemoveDto
 import org.apache.poi.ss.usermodel.WorkbookFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -33,14 +34,14 @@ class ExcelWorkbookUploadService {
         nodeSheet.removeRow(nodeSheet.getRow(0))
         val nameToNodeMap = mutableMapOf<String, Node>()
 
-        nodeSheet.forEachIndexed {index, row ->
+        nodeSheet.forEachIndexed { index, row ->
             val node = Node().apply {
                 this.snapshotId = snapshotId
                 this.year = year
 
                 this.name = row.getCell(headerToIndexMap[ExcelConstants.nodeName]!!).safeStringValue()
-                this.latitude = row.getCell(headerToIndexMap[ExcelConstants.nodeLatitude]!!).safeStringValue()?.getPosition("Неверное значение Latitude в строке ${index+1} таблицы ${ExcelConstants.nodeInfoSheet}")
-                this.longitude = row.getCell(headerToIndexMap[ExcelConstants.nodeLongitude]!!).safeStringValue()?.getPosition("Неверное значение Longitude в строке ${index+1} таблицы ${ExcelConstants.nodeInfoSheet}")
+                this.latitude = row.getCell(headerToIndexMap[ExcelConstants.nodeLatitude]!!).safeStringValue()?.getPosition("Неверное значение Latitude в строке ${index + 1} таблицы ${ExcelConstants.nodeInfoSheet}")
+                this.longitude = row.getCell(headerToIndexMap[ExcelConstants.nodeLongitude]!!).safeStringValue()?.getPosition("Неверное значение Longitude в строке ${index + 1} таблицы ${ExcelConstants.nodeInfoSheet}")
                 this.region = row.getCell(headerToIndexMap[ExcelConstants.nodeRegion]!!).safeStringValue()
                 this.type = row.getCell(headerToIndexMap[ExcelConstants.nodeType]!!).safeStringValue()?.getNodeType()
             }
@@ -114,6 +115,12 @@ class ExcelWorkbookUploadService {
 
         nodeDao.saveAll(nameToNodeMap.values)
         pipeDao.saveAll(pipes)
+    }
+
+    @Transactional
+    fun removeBook(filter: ExcelRemoveDto) {
+        pipeDao.deleteAllBySnapshotIdAndYear(filter.snapshotId, filter.year)
+        nodeDao.deleteAllBySnapshotIdAndYear(filter.snapshotId, filter.year)
     }
 
 }
