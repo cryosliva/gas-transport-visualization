@@ -2,6 +2,7 @@ package com.gas.transport.visualisation.util
 
 import com.gas.transport.visualisation.model.entity.NodeType
 import com.gas.transport.visualisation.util.error.ErrorCode
+import com.gas.transport.visualisation.util.error.type.GtvRuntimeException
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.Sheet
@@ -35,7 +36,14 @@ fun Sheet.getColumnToIndexMap(): MutableMap<String, Int> {
     return headerToIndexMap
 }
 
-fun String.getPosition() = this.substringBefore(' ').toDouble()
+fun String.getPosition(message: String): Double {
+    val result = this.substringBefore(' ').toDoubleOrNull()
+    if(result!=null)
+        return result
+    else
+        throw GtvRuntimeException(message, ErrorCode.INCORRECT_VALUE);
+
+}
 
 fun String.getNodeType(): NodeType = when (this.trim()) {
     "Месторождение" -> NodeType.FIELD
@@ -52,12 +60,12 @@ fun String.getNodeType(): NodeType = when (this.trim()) {
     }
 }
 
-fun Cell.safeStringValue() = when (this.cellTypeEnum) {
+fun Cell?.safeStringValue() = when (this?.cellTypeEnum) {
     CellType.ERROR -> ""
-    else -> this.stringCellValue.trim()
+    else -> this?.stringCellValue?.trim()
 }
 
-inline fun <reified T> T?.notNull(message: String = "Некорректный формат загруженной страницы") : T{
+inline fun <reified T> T?.notNull(message: String = "Некорректный формат загруженной страницы"): T {
     Assert.isTrue(this != null, ErrorCode.INCORRECT_VALUE, message)
     return this!!
 }
