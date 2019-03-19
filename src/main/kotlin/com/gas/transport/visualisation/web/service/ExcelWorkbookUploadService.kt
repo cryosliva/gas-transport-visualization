@@ -98,17 +98,16 @@ class ExcelWorkbookUploadService {
                 val value = row.getCell(1).numericCellValue
                 val supply: Double
                 val demand: Double
-                if (Math.abs(value) < 0.001) {
-                    if (value > 0) {
-                        supply = 0.0
-                        demand = value
-                    } else {
-                        supply = -value
-                        demand = 0.0
-                    }
-                    node.supply = supply
-                    node.demand = demand
+                if (value > 0) {
+                    supply = 0.0
+                    demand = value
+                } else {
+                    supply = -value
+                    demand = 0.0
                 }
+                node.supply = supply
+                node.demand = demand
+
             }
         }
 
