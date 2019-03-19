@@ -10,7 +10,7 @@ import org.apache.poi.ss.usermodel.Sheet
 object ExcelConstants {
     // sheets
     const val nodeInfoSheet = "nodes_locations"
-    const val pipeInfoSheet = "flows"
+    const val pipeInfoSheet = "capacities"
     const val demandsInfoSheet = "demands"
 
     // columns
@@ -41,7 +41,7 @@ fun String.getPosition(message: String): Double {
     if(result!=null)
         return result
     else
-        throw GtvRuntimeException(message, ErrorCode.INCORRECT_VALUE);
+        throw GtvRuntimeException(message, ErrorCode.INCORRECT_VALUE)
 
 }
 
